@@ -1,0 +1,46 @@
+body {
+    background-color: wheat;
+    margin: 0;
+    display: fl;
+}
+
+aside {
+    position: absolute;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    background-color: slateblue;
+}
+
+.container {
+    margin-left: 20%;
+}
+
+nav {
+    position: relative;
+    display: flex;
+    top: 0;
+    height: 4em;
+    width: 100%;
+    background-color: slategray;
+}
+
+.item {
+    height: 100%;
+    vertical-align: middle;
+}
+
+section {
+    background-color: beige;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: tomato;
+}

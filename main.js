@@ -1,37 +1,24 @@
+//@ts-check
 const electron = require('electron')
-const fs = require('fs')
-const ElectronViewRenderer = require('electron-view-renderer')
+const fs = require('fs');
 const pug = require('pug')
+const setupPug = require('electron-pug');
+const locals = {};
+const protocol = electron.protocol;
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
-const viewRenderer = new ElectronViewRenderer({
-    viewPath: 'views',
-    viewProtcolName: 'view',
-    useAssets: true,
-    assetsPath: 'assets',
-    assetsProtocolName: 'asset',
-})
+async function createWindow () {
 
-viewRenderer.add('pug', {
-extension: '.pug',
-viewPath: 'views',
-rendererAction: (filePath, viewData, callback) => {
-    pug.renderFile(filePath, viewData, (error, html) => {
-    if (error) {
-        if (error.file) error.message += `\n\nERROR @(${error.file}:${error.line}:${error.column})`
-        throw new Error(error)
-    }
+  try {
+    let pug = await setupPug({pretty: true}, locals)
+    pug.on('error', err => console.error('electron-pug error', err))
+  } catch (err) {
+    // Could not initiate 'electron-pug'
+  }
+ 
 
-    callback(html)
-    })
-}
-})
-
-viewRenderer.use('pug')
-
-function createWindow () {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -40,13 +27,11 @@ function createWindow () {
     }
   })
 
-  const viewOptions = {date: new Date().getDay()}
-  viewRenderer.load(win, 'index', viewOptions)
-
-  win.webContents.openDevTools()
+  win.loadURL(`file://${__dirname}/views/index.pug`);
 }
 
 app.whenReady().then(createWindow)
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

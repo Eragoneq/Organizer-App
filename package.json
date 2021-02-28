@@ -9,10 +9,10 @@
   "author": "Eragoneq",
   "license": "ISC",
   "dependencies": {
-    "electron-view-renderer": "^1.2.5",
     "electron": "^11.3.0"
   },
   "devDependencies": {
+    "electron-pug": "^2.0.0",
     "pug": "^3.0.0"
   }
 }
